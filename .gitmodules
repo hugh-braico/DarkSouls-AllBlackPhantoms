@@ -1,0 +1,3 @@
+[submodule "MeowDSIO"]
+	path = MeowDSIO
+	url = git@github.com:Meowmaritus/MeowDSIO.git
