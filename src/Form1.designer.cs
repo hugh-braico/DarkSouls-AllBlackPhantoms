@@ -172,7 +172,6 @@
             this.gbWeaponCategory.TabIndex = 32;
             this.gbWeaponCategory.TabStop = false;
             this.gbWeaponCategory.Text = "Settings:";
-            this.gbWeaponCategory.Enter += new System.EventHandler(this.gbWeaponCategory_Enter);
             // 
             // checkBoxBuffs
             // 
@@ -231,7 +230,6 @@
             this.label1.Size = new System.Drawing.Size(216, 13);
             this.label1.TabIndex = 28;
             this.label1.Text = "(BETA: options all enabled, disabling is WIP)";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // Form1
             // 

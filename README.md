@@ -19,16 +19,23 @@ Just download the [latest release](https://github.com/hugh-braico/DarkSouls-AllB
 
 ## Internals
 
-The difference GameParam-wise between a regular enemy and its black phantom version is:
+The difference parameter-wise between a regular enemy and its black phantom version is:
 
-- Black phantom enemies have the effect `7100` in their `Special Effect ID 6` slot, which gives them their stat buffs.
-- Black phantom enemies have `disableInitializeDead=TRUE`, which means they respawn when you quit and reload.
-- Black phantom enemies have `DrawType` 2, which gives them their unique appearance.
+- Black phantom enemies have the effect `Special Effect ID 6 = 7100`, which gives them their stat buffs.
+  - There are multiple slots for special effects. Sometimes this slot is taken up with something else, in which case the program attempts to fill another slot.
+- Black phantom enemies have `disableInitializeDead = true`, which means they respawn when you quit and reload.
+- Black phantom enemies have `DrawType = 2`, which gives them their unique appearance.
+  - This doesn't appear to work for all enemies (especially friendly NPCs), I don't really know why to be honest.
 
 Some additional things that are sometimes different in black phantoms that this mod does not change, just to be on the safe side:
 
 - Some black phantom enemies have different Item Lots (drop tables) to their regular version. I don't know why this is.
 - Some black phantom enemies have different Humanity Lot Id, which is likely related to Humanity Drop.
+
+All these params are kept inside the "NpcParam" param type. Useful links:
+
+- [NpcParam (Souls Modding Wiki)](https://soulsmodding.wikidot.com/param:npcparam)
+- [Param compilation on Google Drive](https://docs.google.com/spreadsheets/d/1KukblWL61We64-gNIyaAShga9h8RTXYmyFs98eQhY4E/edit?usp=sharing) - see the "NPCs" tab
 
 ## Acknowledgements
 

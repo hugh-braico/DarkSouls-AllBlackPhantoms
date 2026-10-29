@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using MeowDSIO;
 using MeowDSIO.DataFiles;
 using System.IO;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
@@ -139,9 +135,43 @@ namespace DarkSoulsAllBlackPhantoms
 
             gameparamBnd.ApplyDefaultParamDefs();
 
-            // Main logic goes here
-            // TODO strip an enormous amount out from this
-            // Placeholder
+            // Main logic
+            foreach (var paramBndEntry in gameparamBnd)
+            {
+                var paramShortName = paramBndEntry.Name;
+                var paramFile = paramBndEntry.Param;
+                if (paramFile.ID == "NPC_PARAM_ST")
+                {
+                    foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
+                    {
+                        foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
+                        {
+                            if (cell.Def.Name.StartsWith("spEffectID6"))
+                            {
+                                // Black phantom enemies have the effect `7100` in their `Special Effect ID 6` slot, which gives them their stat buffs.
+                                // TODO Since this blindly overwrites other special effect IDs, this may have some unforeseen effects.
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                prop.SetValue(cell, 7100, null);
+                            }
+                            else if (cell.Def.Name.StartsWith("disableInitializeDead"))
+                            {
+                                // Black phantom enemies have `disableInitializeDead = TRUE`, which means they respawn when you quit and reload.
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                prop.SetValue(cell, true, null);
+                            }
+                            else if (cell.Def.Name.StartsWith("drawType"))
+                            {
+                                // Black phantom enemies have `DrawType` 2, which gives them their unique appearance.
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                prop.SetValue(cell, 2, null);
+                            }
+                        }
+                    }
+                }
+            }
 
             //repack param files
             DataFile.Resave(gameparamBnd);
@@ -208,32 +238,11 @@ namespace DarkSoulsAllBlackPhantoms
 
         }
 
-        private void chkKnockback_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void chkWeaponDamage_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void gbWeaponCategory_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBoxBuffs_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void radioButtonPTDE_CheckedChanged(object sender, EventArgs e)
         {
 
         }
-
-        private void label1_Click(object sender, EventArgs e)
+        private void checkBoxBuffs_CheckedChanged(object sender, EventArgs e)
         {
 
         }
